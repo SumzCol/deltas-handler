@@ -77,16 +77,16 @@ entrypoints==0.3
     #   nbconvert
 faker==9.3.1
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
-fdb==2.0.2
-    # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
 filelock==3.3.1
     # via virtualenv
+firebird-base==1.3.0
+    # via firebird-driver
+firebird-driver==1.3.2
+    # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
 flake8==3.9.2
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
 fsspec==2021.10.0
     # via kedro
-future==0.18.2
-    # via fdb
 gitdb==4.0.7
     # via gitpython
 gitpython==3.1.24
@@ -101,13 +101,6 @@ iniconfig==1.1.1
     # via pytest
 ipykernel==6.4.1
     # via
-    #   ipywidgets
-    #   jupyter
-    #   jupyter-console
-    #   notebook
-    #   qtconsole
-ipython-genutils==0.2.0
-    # via
     #   ipykernel
     #   ipywidgets
     #   jupyter-server
@@ -115,6 +108,13 @@ ipython-genutils==0.2.0
     #   notebook
     #   qtconsole
 ipython==7.28.0
+    # via
+    #   ipywidgets
+    #   jupyter
+    #   jupyter-console
+    #   notebook
+    #   qtconsole
+ipython-genutils==0.2.0
     # via
     #   -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
     #   ipykernel
@@ -126,10 +126,10 @@ ipywidgets==7.6.5
 isort==5.9.3
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
 jedi==0.18.0
-    # via ipython
-jinja2-time==0.2.0
     # via cookiecutter
 jinja2==3.0.2
+    # via ipython
+jinja2-time==0.2.0
     # via
     #   cookiecutter
     #   jinja2-time
@@ -143,6 +143,11 @@ jmespath==0.10.0
 json5==0.9.6
     # via jupyterlab-server
 jsonschema==4.1.0
+    # via
+    #   jupyterlab
+    #   jupyterlab-server
+    #   nbclassic
+jupyter==1.0.0
     # via
     #   jupyterlab-server
     #   nbformat
@@ -168,19 +173,14 @@ jupyter-core==4.8.1
     #   notebook
     #   qtconsole
 jupyter-server==1.11.1
-    # via
-    #   jupyterlab
-    #   jupyterlab-server
-    #   nbclassic
-jupyter==1.0.0
+    # via ipywidgets
+jupyterlab==3.1.18
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
 jupyterlab-pygments==0.1.2
     # via nbconvert
 jupyterlab-server==2.8.2
     # via jupyterlab
 jupyterlab-widgets==1.0.2
-    # via ipywidgets
-jupyterlab==3.1.18
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
 kedro-airflow==0.4.1
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
@@ -200,12 +200,12 @@ matplotlib-inline==0.1.3
 mccabe==0.6.1
     # via flake8
 mistune==0.8.4
-    # via nbconvert
-mypy-extensions==0.4.3
     # via
     #   black
     #   mypy
 mypy==0.910
+    # via nbconvert
+mypy-extensions==0.4.3
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
 mysql_connector_repackaged==0.3.1
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
@@ -279,6 +279,8 @@ prompt-toolkit==3.0.20
     # via
     #   ipython
     #   jupyter-console
+protobuf==3.18.1
+    # via firebird-base
 psycopg2_binary==2.8.6
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
 py==1.10.0
@@ -301,12 +303,12 @@ pygments==2.10.0
 pyparsing==2.4.7
     # via packaging
 pyrsistent==0.18.0
+    # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
+pytest==6.2.5
     # via jsonschema
 pytest-cov==2.12.1
     # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
 pytest-mock==1.13.0
-    # via -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
-pytest==6.2.5
     # via
     #   -r C:\Users\j.alban\Desktop\deltas-handler\src\requirements.in
     #   pytest-cov
@@ -315,6 +317,7 @@ python-dateutil==2.8.2
     # via
     #   arrow
     #   faker
+    #   firebird-driver
     #   jupyter-client
     #   pandas
 python-json-logger==2.0.2
@@ -347,10 +350,10 @@ qtconsole==5.1.1
 qtpy==1.11.2
     # via qtconsole
 regex==2021.10.8
-    # via black
-requests-unixsocket==0.2.0
     # via jupyter-server
 requests==2.25.1
+    # via black
+requests-unixsocket==0.2.0
     # via
     #   cookiecutter
     #   jupyterlab-server

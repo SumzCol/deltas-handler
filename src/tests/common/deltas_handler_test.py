@@ -62,3 +62,67 @@ print(
 #
 """
 )
+
+# -------------------------------------------------------------------------
+# Imports
+# -------------------------------------------------------------------------
+
+from fdb.fbcore import Connection, Cursor
+import sqlite3 as sq3
+import fdb as firebird
+import psycopg2 as pg
+from faker import Faker
+import logging as log
+import pandas as pd
+import os
+import sys
+import inspect
+
+from kedro_devops.common.deltas_handler import DeltaHandler
+from kedro.config import ConfigLoader, MissingConfigException
+
+# -------------------------------------------------------------------------
+# Logger configuration
+# -------------------------------------------------------------------------
+
+log.basicConfig(
+    level=log.DEBUG,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    filename="delta_handler_test.log",
+    filemode="w",
+)
+
+# -------------------------------------------------------------------------
+# Constants and parameters
+# -------------------------------------------------------------------------
+
+conf_paths = ["../conf/base", "../conf/local"]
+conf_loader = ConfigLoader(conf_paths)
+parameters = conf_loader.get("parameters*", "parameters*/**")
+catalog = conf_loader.get("catalog*", "catalog*/**")
+logging = conf_loader.get("logging*", "logging*/**")
+credentials = conf_loader.get("credentials*", "credentials*/**")
+
+print("credentials: ", credentials)
+
+TEST1_TABLE_NAME = parameters.test_environment.TEST1_TABLE_NAME
+
+FIREBIRD_TEST_DATABASE_HOST = parameters.firebird.DATABASE_HOST
+FIREBIRD_TEST_DATABASE_USER = credentials.firebird.DATABASE_USER
+FIREBIRD_TEST_DATABASE_PASSWORD = credentials.firebird.DATABASE_PASSWORD
+FIREBIRD_TEST_DATABASE_PATH = parameters.firebird.DATABASE_PATH
+
+MYSQL_TEST_DATABASE_HOST = parameters.mysql.DATABASE_HOST
+MYSQL_TEST_DATABASE_USER = credentials.mysql.DATABASE_USER
+MYSQL_TEST_DATABASE_PASSWORD = credentials.mysql.DATABASE_PASSWORD
+MYSQL_TEST_DATABASE_PATH = parameters.mysql.DATABASE_PATH
+
+POSTGRES_TEST_DATABASE_HOST = parameters.postgres.DATABASE_HOST
+POSTGRES_TEST_DATABASE_USER = credentials.postgres.DATABASE_USER
+POSTGRES_TEST_DATABASE_PASSWORD = credentials.postgres.DATABASE_PASSWORD
+POSTGRES_TEST_DATABASE_PATH = parameters.postgres.DATABASE_PATH
+
+# -------------------------------------------------------------------------
+# Functions
+# -------------------------------------------------------------------------

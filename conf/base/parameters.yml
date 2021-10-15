@@ -1,6 +1,16 @@
-# Parameters for the example pipeline. Feel free to delete these once you
-# remove the example pipeline from hooks.py and the example nodes in
-# `src/pipelines/`
-example_test_data_ratio: 0.2
-example_num_train_iter: 10000
-example_learning_rate: 0.01
+
+#No problem with passwords here as they are just for test databases
+test_environment:
+    TEST1_TABLE_NAME: "test_table"
+
+firebird:
+    DATABASE_PATH: "test_firebird.fdb"
+    DATABASE_HOST: "localhost"
+
+mysql:
+    DATABASE_PATH: "test_mysql"
+    DATABASE_HOST: "localhost"
+
+postgres:
+    DATABASE_PATH: "test_postgres"
+    DATABASE_HOST: "localhost"
