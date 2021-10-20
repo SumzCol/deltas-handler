@@ -64,5 +64,4 @@ log.basicConfig(
     filemode="w",
 )
 
-
 class test_catalog_extractor:
