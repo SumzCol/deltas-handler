@@ -1,0 +1,502 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# Layer 00_Source
+#-----------------------------------------------------------------------------------------------------------------------
+
+source_hw_titulares:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(tit_feccre AS date) AS "creation_date" FROM tbltit) AS titulares
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_pasajeros_de_la_reserva:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(paxres_feccre AS date) AS "creation_date" FROM tblpaxres) AS hw_pasajeros_de_la_reserva
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_email_titular:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(titmail_feccre AS date) AS "creation_date" FROM tbltitmail) as email_titular
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2015-01-01"
+      upperBound: "2030-01-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_vista_tipos:
+  type: spark.SparkJDBCDataSet
+  table: vis_tipos
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_hw_tabla_maestra_reservas:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(res_feccre AS date) AS "creation_date" FROM tblres) AS hw_tabla_maestra_reservas
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_detalle_reserva:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(detres_feccre AS date) AS "creation_date" FROM tbldetres) AS hw_detalle_reserva
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_maestro_facturas:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(fac_feccre AS date) AS "creation_date" FROM tblfac) AS hw_maestro_facturas
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_detalle_facturas:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(liq_feccre AS date) AS "creation_date" FROM tbldetfac) AS hw_maestro_facturas
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_facturas_por_reserva:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(resfac_feccre AS date) AS "creation_date" FROM tblresfac) AS hw_facturas_por_reserva
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_establecimientos:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(establ_feccre AS date) AS "creation_date" FROM tblestabl) AS hw_establecimientos
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_detalle_tipos:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(tipdet_feccre AS date) AS "creation_date" FROM tbltipdet) AS hw_detalle_tipos
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_hw_ciudades:
+  type: spark.SparkJDBCDataSet
+  table: tblciu
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_hw_paises:
+  type: spark.SparkJDBCDataSet
+  table: tblpai
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_hw_tipos_habitacion:
+  type: spark.SparkJDBCDataSet
+  table: tbltiphab
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_hw_tipos_habitacion_por_hotel:
+  type: spark.SparkJDBCDataSet
+  table: tbltiphah
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_hw_objetos:
+  type: spark.SparkJDBCDataSet
+  table: tblobj
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_hw_planes:
+  type: spark.SparkJDBCDataSet
+  table: tblpla
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_hw_tasa_de_cambio:
+  type: spark.SparkJDBCDataSet
+  table: tbltrm
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_hw_tabla_acomodaciones:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT * FROM tblaco) AS hw_Tabla_acomodaciones
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_hw_acomodaciones_por_reserva:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(acores_feccre AS date) AS "creation_date" FROM tblacores) as acomodaciones_por_reserva
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+
+source_hw_descripcion_acomodaciones:
+  type: spark.SparkJDBCDataSet
+  table: (
+    SELECT acores_cod as codigo_acomodacion,
+      acores_num as numero_personas,
+      detres_cod as codigo_detalles_reserva,
+      CAST(acores_feccre as date) as fecha_creacion_acomodacion,
+      tblacores.usr_cod as codigo_usuario,
+      tblestabl.establ_des as hotel,
+      detres_fecini as fecha_entrada,
+      detres_fecfin as fecha_salida,
+      object_descriptions.obj_ide as descriocion_clase_habitacion,
+      object_descriptions2.obj_ide as descripcion_tipo_habitacion
+
+      FROM tblacores
+      LEFT JOIN tbltiphah
+        ON tblacores.tiphah_cod = tbltiphah.tiphah_cod
+      LEFT JOIN tblestabl
+        ON tbltiphah.establ_cod = tblestabl.establ_cod
+      LEFT JOIN tbltiphab
+        ON tbltiphah.tiphab_cod = tbltiphab.tiphab_cod
+        LEFT JOIN
+          (
+            SELECT tbltipdet.tipdet_cod as tipdet_cod, tblobj.obj_cod as obj_cod, obj_ide
+            FROM tbltipdet
+              LEFT JOIN tblobj
+                ON tbltipdet.obj_cod = tblobj.obj_cod
+          ) object_descriptions
+        ON (tbltiphab.tipdet_cod_cla = object_descriptions.tipdet_cod)
+        LEFT JOIN
+          (
+            SELECT tbltipdet.tipdet_cod as tipdet_cod, tblobj.obj_cod as obj_cod, obj_ide
+            FROM tbltipdet
+              LEFT JOIN tblobj
+                ON tbltipdet.obj_cod = tblobj.obj_cod
+          ) object_descriptions2
+        ON (tbltiphab.tipdet_cod_car = object_descriptions2.tipdet_cod)
+      ) as descripcion_habitaciones
+  credentials: decameron_spark
+  url: jdbc:postgresql://usue2odhd001s.decameron.com:54322/decameronhw
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "fecha_creacion_acomodacion"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+#----------------------------------------------------------------------------------------------------------------------
+# Layer 01_intermediate
+#----------------------------------------------------------------------------------------------------------------------
+
+blob_hw_titulares:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_titulares.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_pasajeros_de_la_reserva:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_pasajeros_de_la_reserva.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_email_titular:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_email_titular.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_vista_tipos:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_vista_tipos.parquet
+  save_args:
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_tabla_maestra_reservas:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_tabla_maestra_reservas.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_detalle_reserva:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_detalle_reserva.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_maestro_facturas:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_maestro_facturas.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_detalle_facturas:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_detalle_facturas.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_facturas_por_reserva:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_facturas_por_reserva.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_establecimientos:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_establecimientos.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_detalle_tipos:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_detalle_tipos.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_ciudades:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_ciudades.parquet
+  save_args:
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_paises:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_paises.parquet
+  save_args:
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_tipos_habitacion:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_tipos_habitacion.parquet
+  save_args:
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_tipos_habitacion_por_hotel:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_tipos_habitacion_por_hotel.parquet
+  save_args:
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_objetos:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_objetos.parquet
+  save_args:
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_planes:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_planes.parquet
+  save_args:
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_tasa_de_cambio:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_tasa_de_cambio.parquet
+  save_args:
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_tabla_acomodaciones:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_tabla_acomodaciones.parquet
+  save_args:
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_acomodaciones_por_reserva:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_acomodaciones_por_reserva.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_hw_descripcion_acomodaciones:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_descripcion_acomodaciones.parquet
+  save_args:
+    partitionBy: "fecha_creacion_acomodacion"
+    mode: overwrite
+  layer: 01_intermediate

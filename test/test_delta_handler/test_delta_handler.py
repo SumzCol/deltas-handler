@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 print(
-"""
+    """
 #-------------------------------------------------------------------------
 # Author: Juan José Albán, Sumz
 # github: elcubonegro, sumzcol
@@ -67,7 +67,6 @@ print(
 # imports
 
 from fdb.fbcore import Connection, Cursor
-import sqlite3
 from faker import Faker
 import datetime
 import logging as log
@@ -89,17 +88,17 @@ TEST1_TABLE_NAME = "test_table"
 
 FIREBIRD_DATABASE_HOST = "localhost"
 FIREBIRD_DATABASE_USER = "SYSDBA"
-FIREBIRD_DATABASE_PASSWORD = 'ConTErcardya\"'
+FIREBIRD_DATABASE_PASSWORD = 'ConTErcardya"'
 FIREBIRD_DATABASE_PATH = "test_firebird.fdb"
 
 MYSQL_DATABASE_HOST = "localhost"
 MYSQL_DATABASE_USER = "root"
-MYSQL_DATABASE_PASSWORD = 'ConTErcardya\"'
+MYSQL_DATABASE_PASSWORD = 'ConTErcardya"'
 MYSQL_DATABASE_PATH = "test_mysql"
 
 POSTGRES_DATABASE_HOST = "localhost"
 POSTGRES_DATABASE_USER = "SYSDBA"
-POSTGRES_DATABASE_PASSWORD = 'ConTErcardya\"'
+POSTGRES_DATABASE_PASSWORD = 'ConTErcardya"'
 POSTGRES_DATABASE_PATH = "test_postgres"
 
 
@@ -115,12 +114,14 @@ def firebird_database_connection() -> Connection:
     connection = firebird.connect(
         host=FIREBIRD_DATABASE_HOST,
         database=FIREBIRD_DATABASE_PATH,
-        user=FIREBIRD_DATABASE_USER, 
+        user=FIREBIRD_DATABASE_USER,
         password=FIREBIRD_DATABASE_PASSWORD,
-        connection_class=firebird.ConnectionWithSchema
+        connection_class=firebird.ConnectionWithSchema,
     )
     log.info("connected to firebird database")
     return connection
+
+
 firebird_connection = firebird_database_connection()
 
 # 1.1.2 MySQL environment creation
@@ -132,37 +133,39 @@ def connect_mysql_database() -> Connection:
         cursor: cursor to the database
     """
     connection = mysql_connector.connect(
-        host = MYSQL_DATABASE_HOST,
-        user = MYSQL_DATABASE_USER,
-        passwd = MYSQL_DATABASE_PASSWORD,
-        database = MYSQL_DATABASE_PATH
+        host=MYSQL_DATABASE_HOST,
+        user=MYSQL_DATABASE_USER,
+        passwd=MYSQL_DATABASE_PASSWORD,
+        database=MYSQL_DATABASE_PATH,
     )
     log.info("connected to mysql database")
     return connection
+
+
 mysql_connection = connect_mysql_database()
 
 # 1.1.3 PostgreSQL environment creation
-def postgress_connection(with_db_name = True) -> Connection:
+def postgress_connection(with_db_name=True) -> Connection:
     """
     Function to create a connection to a postgresql database in case it exists
     Args:
         None
     Returns:
         cursor: cursor to the database
-    """  
+    """
     log.info("connecting to database at localhost:'/var/lib/pgsql/data")
     connection_parameters = {
-        "user":POSTGRES_DATABASE_USER,
-        "password":POSTGRES_DATABASE_PASSWORD,
-        "host":POSTGRES_DATABASE_HOST
-        }
+        "user": POSTGRES_DATABASE_USER,
+        "password": POSTGRES_DATABASE_PASSWORD,
+        "host": POSTGRES_DATABASE_HOST,
+    }
     if with_db_name:
         connection_parameters["database"] = POSTGRES_DATABASE_PATH
-    connection = postgresql.connect(
-        **connection_parameters
-    )
+    connection = postgresql.connect(**connection_parameters)
     log.info("connected to postgresql database")
     return connection
+
+
 postgresql_connection = postgress_connection()
 
 # 1.2 Clean environments
@@ -181,29 +184,35 @@ try:
     postgresql_connection = postgress_connection()
     postgresql_connection.autocommit = 1
     postgresql_cursor = postgresql_connection.cursor()
-    postgresql_cursor.execute("SELECT pg_terminate_backend (PID) FROM pg_stat_activity WHERE pg_stat_activity.datname = \'{}\'".format(POSTGRES_DATABASE_PATH))
+    postgresql_cursor.execute(
+        "SELECT pg_terminate_backend (PID) FROM pg_stat_activity WHERE pg_stat_activity.datname = '{}'".format(
+            POSTGRES_DATABASE_PATH
+        )
+    )
 
     postgresql_connection = postgress_connection()
     postgresql_connection.autocommit = 1
     postgresql_cursor = postgresql_connection.cursor()
-    postgresql_cursor.execute("DROP DATABASE IF EXISTS {}".format(POSTGRES_DATABASE_PATH))
+    postgresql_cursor.execute(
+        "DROP DATABASE IF EXISTS {}".format(POSTGRES_DATABASE_PATH)
+    )
     postgresql_connection.close()
 except Exception as e:
     log.exception(e)
 
 firebird_connection = firebird.create_database(
     "create database 'localhost:{path}' user '{user}' password '{password}'".format(
-        path = FIREBIRD_DATABASE_PATH , 
-        user = FIREBIRD_DATABASE_USER, 
-        password = FIREBIRD_DATABASE_PASSWORD
-        )
+        path=FIREBIRD_DATABASE_PATH,
+        user=FIREBIRD_DATABASE_USER,
+        password=FIREBIRD_DATABASE_PASSWORD,
     )
+)
 firebird_cursor = firebird_connection.cursor()
 
 mysql_connection = mysql_connector.connect(
-    host = MYSQL_DATABASE_HOST,
-    user = MYSQL_DATABASE_USER,
-    passwd = MYSQL_DATABASE_PASSWORD,
+    host=MYSQL_DATABASE_HOST,
+    user=MYSQL_DATABASE_USER,
+    passwd=MYSQL_DATABASE_PASSWORD,
 )
 mysql_cursor = mysql_connection.cursor()
 mysql_cursor.execute("DROP DATABASE IF EXISTS {}".format(MYSQL_DATABASE_PATH))
@@ -213,37 +222,49 @@ mysql_cursor.execute("USE {}".format(MYSQL_DATABASE_PATH))
 # 1.4 Create test databases
 log.info("creating test tables")
 
-firebird_cursor.execute("""
+firebird_cursor.execute(
+    """
     create table {0} (
         id integer,
         city varchar(20),
         state varchar(20),
         real_value float,
         visit_date date
-    )""".format(TEST1_TABLE_NAME))
+    )""".format(
+        TEST1_TABLE_NAME
+    )
+)
 
-mysql_cursor.execute("""
+mysql_cursor.execute(
+    """
     create table {0} (
         id integer,
         city varchar(20),
         state varchar(20),
         real_value float,
         visit_date date
-    )""".format(TEST1_TABLE_NAME))
+    )""".format(
+        TEST1_TABLE_NAME
+    )
+)
 
 postgresql_connection = postgress_connection()
 postgresql_cursor = postgresql_connection.cursor()
-postgresql_cursor.execute("""
+postgresql_cursor.execute(
+    """
     create table {0} (
         id integer,
         city varchar(20),
         state varchar(20),
         real_value float,
         visit_date date
-    )""".format(TEST1_TABLE_NAME))
+    )""".format(
+        TEST1_TABLE_NAME
+    )
+)
 
 # 1.5 Charge dummy data
- 
+
 dummy_data = [
     (1, "Atlanta", "Georgia", 10.00, "2020-01-01"),
     (2, "Boston", "Massachusetts", 20.00, "2020-01-02"),
@@ -266,21 +287,26 @@ dummy_data = [
     (19, "Wichita", "Kansas", 190.00, "2020-01-19"),
     (20, "Chicago", "Illinois", 200.00, "2020-01-20"),
     (21, "Boston", "Massachusetts", 210.00, "2020-01-21"),
-    (22, "Los Angeles", "California", 220.00, "2020-01-22")
-    ]
+    (22, "Los Angeles", "California", 220.00, "2020-01-22"),
+]
 
-firebird_cursor.executemany('INSERT INTO {} (id, city, state, real_value, visit_date) VALUES(?, ?, ?, ?, ?) returning id'.format(TEST1_TABLE_NAME), dummy_data)
+firebird_cursor.executemany(
+    "INSERT INTO {} (id, city, state, real_value, visit_date) VALUES(?, ?, ?, ?, ?) returning id".format(
+        TEST1_TABLE_NAME
+    ),
+    dummy_data,
+)
 
-#firebird_checking_query = """
+# firebird_checking_query = """
 #    SELECT *
 #    FROM RDB$RELATIONS a
 #    WHERE COALESCE(RDB$SYSTEM_FLAG, 0) = 0 AND RDB$RELATION_TYPE = 0
 #    """
 
-#response = firebird_cursor.execute(firebird_checking_query)
-#print(response.fetchall())
+# response = firebird_cursor.execute(firebird_checking_query)
+# print(response.fetchall())
 
-#postgresql_fixture_query = """
-#    CREATE TABLE 
-#"""
-#mysql_fixture_query = """  """
+# postgresql_fixture_query = """
+#    CREATE TABLE
+# """
+# mysql_fixture_query = """  """

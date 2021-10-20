@@ -2,18 +2,21 @@
 
 from sqlite3.dbapi2 import Cursor
 
-def delta_handler(cursor:Cursor, origin_table:str, modified_table:str) -> str:
+
+def delta_handler(cursor: Cursor, origin_table: str, modified_table: str) -> str:
     """Function under development"""
     return "create table resultado (result int)"
 
-def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
+
+def delta_retrieval(cursor: Cursor, origin_table: str, modified_table: str) -> str:
     """Function under development"""
     return "create table resultado (result int)"
+
 
 #
 #
 #
-#def create_database(cursor):
+# def create_database(cursor):
 #    # drop tables
 #    cursor.execute("""drop table if exists CLIENTS1""")
 #    cursor.execute("""drop table if exists CLIENTS2""")
@@ -90,7 +93,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #            , [value] integer
 #        )"""
 #    )
-#    
+#
 #    # create modifications for each table
 #    cursor.execute(
 #        """
@@ -102,7 +105,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #            , [update_date] date
 #            , [type_of_crud] text
 #        )"""
-#    )      
+#    )
 #
 #    cursor.execute(
 #        """
@@ -124,11 +127,11 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #            , [type_of_crud] text
 #        )"""
 #    )
-#    
+#
 #    yield cursor
 #
-#@pytest.fixture
-#def create_databases():
+# @pytest.fixture
+# def create_databases():
 #    """
 #    Fixture to create databases
 #    Args:
@@ -140,15 +143,15 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    create_database(mysql_connection)
 #    create_database(postgresql_connection)
 #
-## Test 
+## Test
 #
 ## end of create_database()
 #
 ## create faker to create fake data
-#fake = Faker()
+# fake = Faker()
 #
 ## test 1: simple insert
-#def test_insert(create_databases):
+# def test_insert(create_databases):
 #    """Simple test to check for inserts"""
 #
 #    cursor = create_database
@@ -162,22 +165,22 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)",
 #        client_test1
 #    )
-#    
-#    # inserted data 
+#
+#    # inserted data
 #    insert = [(4, "Camilo", 400, "2021-08-01", "2021-08-01")]
 #    client_test1 += insert
 #
 #    cursor.executemany(
-#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)",
 #        client_test1
-#    )   
+#    )
 #
 #    # create modifications
 #    cursor.executemany(
-#        "INSERT INTO MODIFICATIONS_CLIENTS1 VALUES(?, ?, ?, ?, ?, ?)", 
+#        "INSERT INTO MODIFICATIONS_CLIENTS1 VALUES(?, ?, ?, ?, ?, ?)",
 #        [insert[0] + ("insert",)]
 #    )
 #
@@ -189,7 +192,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #
 #
 ## test 2: simple delete
-#def test_delete(create_databases):
+# def test_delete(create_databases):
 #    """Simple test to check for delete"""
 #
 #    cursor = create_database
@@ -203,7 +206,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)",
 #        client_test2
 #    )
 #
@@ -212,13 +215,13 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    client_test2 = client_test2[:2]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)",
 #        client_test2
 #    )
 #
 #    # create modifications
 #    cursor.executemany(
-#        "INSERT INTO MODIFICATIONS_CLIENTS1 VALUES(?, ?, ?, ?, ?, ?)", 
+#        "INSERT INTO MODIFICATIONS_CLIENTS1 VALUES(?, ?, ?, ?, ?, ?)",
 #        delete
 #    )
 #
@@ -229,7 +232,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 ## end of test_delete()
 #
 ## test 3: simple update
-#def test_update(create_databases):
+# def test_update(create_databases):
 #    """Simple test to check for updates"""
 #
 #    cursor = create_database
@@ -243,7 +246,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)",
 #        client_test3
 #    )
 #
@@ -252,13 +255,13 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    client_test3[2] = update
 #
 #    cursor.executemany(
-#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)",
 #        client_test3
 #    )
 #
 #    # create modifications
 #    cursor.executemany(
-#        "INSERT INTO MODIFICATIONS_CLIENTS1 VALUES(?, ?, ?, ?, ?, ?)", 
+#        "INSERT INTO MODIFICATIONS_CLIENTS1 VALUES(?, ?, ?, ?, ?, ?)",
 #        [update+("update",)]
 #    )
 #
@@ -269,7 +272,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 ## end of test_update()
 #
 ## test 4: no crud
-#def test_no_modifications(create_databases):
+# def test_no_modifications(create_databases):
 #    """Simple test to check no crud operations"""
 #
 #    cursor = create_database
@@ -283,13 +286,13 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)",
 #        client_test4
 #    )
 #
 #    # create unmodified data
 #    cursor.executemany(
-#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)",
 #        client_test4
 #    )
 #
@@ -300,7 +303,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 ## end of test_no_modifications()
 #
 ## test 4.1: all new info
-#def test_all_modifications(create_databases):
+# def test_all_modifications(create_databases):
 #    """Simple test to check full delete and insert"""
 #
 #    cursor = create_database
@@ -316,7 +319,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients2 VALUES(?, ?, ?, ?)", 
+#        "INSERT INTO clients2 VALUES(?, ?, ?, ?)",
 #        client_test41
 #    )
 #
@@ -333,16 +336,16 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #        ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients2_mod VALUES(?, ?, ?, ?)", 
+#        "INSERT INTO clients2_mod VALUES(?, ?, ?, ?)",
 #        client_test41
 #    )
 #
 #    # insert modifications
 #    modifications = [client + ("insert", ) for client in client_test41] + \
 #        modifications
-#    
+#
 #    cursor.executemany(
-#        "INSERT INTO MODIFICATIONS_CLIENTS2 VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO MODIFICATIONS_CLIENTS2 VALUES(?, ?, ?, ?, ?)",
 #        modifications
 #    )
 #
@@ -354,7 +357,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #
 #
 ## test 5: updates without update date
-#def test_update_no_dates(create_databases):
+# def test_update_no_dates(create_databases):
 #    """Check for updates without update date"""
 #
 #    cursor = create_database
@@ -371,7 +374,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients2 VALUES(?, ?, ?, ?)", 
+#        "INSERT INTO clients2 VALUES(?, ?, ?, ?)",
 #        client_test5
 #    )
 #
@@ -392,10 +395,10 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #            client_test5[random_update][2] + fake.unique.random_int(min=100000, max=999999),
 #            client_test5[random_update][3]
 #        )
-#        
+#
 #
 #    cursor.executemany(
-#        "INSERT INTO clients2_mod VALUES(?, ?, ?, ?)", 
+#        "INSERT INTO clients2_mod VALUES(?, ?, ?, ?)",
 #        client_test5
 #    )
 #
@@ -403,7 +406,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    updates = [update + ("update",) for update in updates]
 #
 #    cursor.executemany(
-#        "INSERT INTO MODIFICATIONS_CLIENTS2 VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO MODIFICATIONS_CLIENTS2 VALUES(?, ?, ?, ?, ?)",
 #        updates
 #    )
 #
@@ -414,7 +417,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 ## end of test_update_no_dates()
 #
 ## test 6: inserts and deletes without dates
-#def test_insert_delete_no_dates(create_databases):
+# def test_insert_delete_no_dates(create_databases):
 #    """Check for insert and delete without date"""
 #
 #    cursor = create_database
@@ -430,7 +433,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients3 VALUES(?, ?, ?)", 
+#        "INSERT INTO clients3 VALUES(?, ?, ?)",
 #        client_test6
 #    )
 #
@@ -452,7 +455,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    client_test6.sort()
 #
 #    cursor.executemany(
-#        "INSERT INTO clients3_mod VALUES(?, ?, ?)", 
+#        "INSERT INTO clients3_mod VALUES(?, ?, ?)",
 #        client_test6
 #    )
 #
@@ -461,7 +464,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #        [insert + ("insert",) for insert in inserts]
 #
 #    cursor.executemany(
-#        "INSERT INTO MODIFICATIONS_CLIENTS3 VALUES(?, ?, ?, ?)", 
+#        "INSERT INTO MODIFICATIONS_CLIENTS3 VALUES(?, ?, ?, ?)",
 #        modifications
 #    )
 #
@@ -472,7 +475,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 ## end of test_insert_delete_no_dates()
 #
 ## test 7: any crud with dates
-#def test_any_crud(create_databases):
+# def test_any_crud(create_databases):
 #    """Check for any crudes with update dates"""
 #
 #    cursor = create_database
@@ -490,7 +493,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1 VALUES(?, ?, ?, ?, ?)",
 #        client_test7
 #    )
 #
@@ -501,7 +504,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #
 #    random_updates = [fake.unique.random_int(min=0, max=numbers-1) for _ in range(qt_of_updates)]
 #
-#    updates = [] 
+#    updates = []
 #    for random_update in random_updates:
 #
 #        updates.append(client_test7[random_update])
@@ -513,7 +516,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #            client_test7[random_update][3],
 #            fake.date_between(datetime.date(2021,8,1), datetime.date(2021,8,31))
 #        )
-#        
+#
 #
 #    inserts = [(
 #        fake.unique.random_int(min=1000000000, max=1500000000),
@@ -535,7 +538,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    client_test7.sort()
 #
 #    cursor.executemany(
-#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)", 
+#        "INSERT INTO clients1_mod VALUES(?, ?, ?, ?, ?)",
 #        client_test7
 #    )
 #
@@ -545,7 +548,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #        [update + ("update",) for update in updates]
 #
 #    cursor.executemany(
-#        "INSERT INTO MODIFICATIONS_CLIENTS1 VALUES(?, ?, ?, ?, ?, ?)", 
+#        "INSERT INTO MODIFICATIONS_CLIENTS1 VALUES(?, ?, ?, ?, ?, ?)",
 #        modifications
 #    )
 #
@@ -557,7 +560,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #
 #
 ## test 8: any crud without dates
-#def test_any_crud_no_dates(create_databases):
+# def test_any_crud_no_dates(create_databases):
 #    """Check for any crudes without dates"""
 #
 #    cursor = create_database
@@ -573,7 +576,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    ]
 #
 #    cursor.executemany(
-#        "INSERT INTO clients3 VALUES(?, ?, ?)", 
+#        "INSERT INTO clients3 VALUES(?, ?, ?)",
 #        client_test8
 #    )
 #
@@ -594,7 +597,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #            client_test8[random_update][1],
 #            client_test8[random_update][2] + fake.unique.random_int(min=100000, max=999999),
 #        )
-#        
+#
 #
 #    inserts = [(
 #        fake.unique.random_int(min=1000000000, max=1500000000),
@@ -614,7 +617,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #    client_test8.sort()
 #
 #    cursor.executemany(
-#        "INSERT INTO clients3_mod VALUES(?, ?, ?)", 
+#        "INSERT INTO clients3_mod VALUES(?, ?, ?)",
 #        client_test8
 #    )
 #
@@ -624,7 +627,7 @@ def delta_retrieval(cursor:Cursor, origin_table:str, modified_table:str) -> str:
 #        [update + ("update",) for update in updates]
 #
 #    cursor.executemany(
-#        "INSERT INTO MODIFICATIONS_CLIENTS3 VALUES(?, ?, ?, ?)", 
+#        "INSERT INTO MODIFICATIONS_CLIENTS3 VALUES(?, ?, ?, ?)",
 #        modifications
 #    )
 #

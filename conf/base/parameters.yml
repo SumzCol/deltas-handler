@@ -1,0 +1,4 @@
+spark_temp_path: "abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/DataAssesment/Staging/Temp/"
+transaction_master_table_from_date: '2015-01-01'
+
+table_names: ["hw_pasajeros"]

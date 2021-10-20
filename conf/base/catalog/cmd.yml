@@ -1,0 +1,164 @@
+#-------------------------------------------------------------------------------------------
+# Layer 0: Source
+#-------------------------------------------------------------------------------------------
+
+source_cdm_usuarios_size:
+  type: pandas.SQLQueryDataSet
+  credentials: cdm
+  sql: (SELECT COUNT (*) FROM profiles)
+  layer: source
+
+source_cdm_usuarios:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(created_at AS date) AS "creation_date" FROM profiles) AS profiles
+  credentials: decameron_spark
+  url: jdbc:postgresql://cocnaodcd001s.decameron.com:5432/cdm
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: source
+
+source_cdm_size:
+  type: pandas.SQLQueryDataSet
+  credentials: cdm
+  sql: (SELECT COUNT (*) FROM contracts)
+  layer: 00_source
+
+source_cdm_contracts:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(created_at AS date) AS "creation_date" FROM contracts) AS contracts
+  credentials: decameron_spark
+  url: jdbc:postgresql://cocnaodcd001s.decameron.com:5432/cdm
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_cdm_contract_profile:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(created_at AS date) AS "creation_date" FROM contract_profile) AS contract_profile
+  credentials: decameron_spark
+  url: jdbc:postgresql://cocnaodcd001s.decameron.com:5432/cdm
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_cdm_emails:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(created_at AS date) as "creation_date" FROM emails) AS cdm_emails
+  credentials: decameron_spark
+  url: jdbc:postgresql://cocnaodcd001s.decameron.com:5432/cdm
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_cdm_phones:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(created_at AS date) as "creation_date" FROM phones) AS cdm_phones
+  credentials: decameron_spark
+  url: jdbc:postgresql://cocnaodcd001s.decameron.com:5432/cdm
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+source_cdm_addresses:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT *, CAST(created_at AS date) as "creation_date" FROM addresses) AS cdm_addresses
+  credentials: decameron_spark
+  url: jdbc:postgresql://cocnaodcd001s.decameron.com:5432/cdm
+  load_args:
+    properties:
+      fetchSize: "1000"
+      driver: org.postgresql.Driver
+      partitionColumn: "creation_date"
+      lowerBound: "2021-09-01"
+      upperBound: "2021-10-01"
+      numPartitions: "200"
+  layer: 00_source
+
+
+#----------------------------------------------------------------------------------------------------------------------
+# Layer 01_intermediate
+#----------------------------------------------------------------------------------------------------------------------
+
+blob_cdm_usuarios:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/cdm_usuarios
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_cdm_contracts:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/cdm_contracts.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_cdm_contract_profile:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/cdm_contract_profile.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_cdm_emails:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/cdm_emails.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_cdm_phones:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/cdm_phones.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate
+
+blob_cdm_addresses:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/cdm_addresses.parquet
+  save_args:
+    partitionBy: "creation_date"
+    mode: overwrite
+  layer: 01_intermediate

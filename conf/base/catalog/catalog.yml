@@ -1,0 +1,127 @@
+source_test_firstload_nmi:
+  type: spark.SparkDataSet
+  file_format: csv
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_acomodaciones_por_reserva.parquet
+
+source_test_abfs_nmi:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_acomodaciones_por_reserva.parquet
+
+source_test_abfs_mci:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_acomodaciones_por_reserva.parquet
+
+source_test_abfs_complete:
+  type: spark.SparkDataSet
+  file_format: parquet
+  filepath: abfs://filesystemdecameron@dataintegrationstor.dfs.core.windows.net/Learning/01_intermediate/hw_acomodaciones_por_reserva.parquet
+
+source_test_firebird_nmi:
+  type: spark.SparkJDBCDataSet
+  table: nmi
+  credentials: test_credentials_firebird
+  url: jdbc:firebirdsql://localhost:3050
+  save_args:
+    mode: overwrite
+  load_args:
+    properties:
+      driver: org.firebirdsql.jdbc.FBDriver
+  layer: 00_source
+
+source_test_firebird_mci:
+  type: spark.SparkJDBCDataSet
+  table: (SELECT * FROM mci) AS mci
+  credentials: test_credentials_firebird
+  url: jdbc:firebirdsql://localhost:3050
+  save_args:
+    mode: overwrite
+  load_args:
+    properties:
+      driver: org.firebirdsql.jdbc.FBDriver
+  layer: 00_source
+
+source_test_firebird_complete:
+  type: spark.SparkJDBCDataSet
+  table: complete
+  credentials: test_credentials_firebird
+  url: jdbc:firebirdsql://localhost:3050
+  save_args:
+    mode: overwrite
+  load_args:
+    properties:
+      driver: org.firebirdsql.jdbc.FBDriver
+  layer: 00_source
+
+source_test_postgres_nmi:
+  type: spark.SparkJDBCDataSet
+  table: nmi
+  credentials: test_credentials_postgres
+  url: jdbc:postgresql://localhost:5432
+  save_args:
+    mode: overwrite
+  load_args:
+    properties:
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_test_postgres_mci:
+  type: spark.SparkJDBCDataSet
+  table: mci
+  credentials: test_credentials_postgres
+  url: jdbc:postgresql://localhost:5432
+  save_args:
+    mode: overwrite
+  load_args:
+    properties:
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_test_postgres_complete:
+  type: spark.SparkJDBCDataSet
+  table: complete
+  credentials: test_credentials_postgres
+  url: jdbc:postgresql://localhost:5432
+  save_args:
+    mode: overwrite
+  load_args:
+    properties:
+      driver: org.postgresql.Driver
+  layer: 00_source
+
+source_test_mysql_nmi:
+  type: spark.SparkJDBCDataSet
+  table: nmi
+  credentials: test_credentials_mysql
+  url: jdbc:mysql://localhost:3306
+  save_args:
+    mode: overwrite
+  load_args:
+    properties:
+      driver: org.mariadb.jdbc.Driver
+  layer: 00_source
+
+source_test_mysql_mci:
+  type: spark.SparkJDBCDataSet
+  table: mci
+  credentials: test_credentials_mysql
+  url: jdbc:mysql://localhost:3306
+  save_args:
+    mode: overwrite
+  load_args:
+    properties:
+      driver: org.mariadb.jdbc.Driver
+  layer: 00_source
+
+source_test_mysql_complete:
+  type: spark.SparkJDBCDataSet
+  table: complete
+  credentials: test_credentials_mysql
+  url: jdbc:mysql://localhost:3306
+  save_args:
+    mode: overwrite
+  load_args:
+    properties:
+      driver: org.mariadb.jdbc.Driver
+  layer: 00_source
