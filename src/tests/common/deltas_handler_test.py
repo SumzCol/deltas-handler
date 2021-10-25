@@ -99,14 +99,23 @@ log.basicConfig(
 
 conf_paths = ["../conf/base", "../conf/local"]
 conf_loader = ConfigLoader(conf_paths)
+
 parameters = conf_loader.get("parameters*", "parameters*/**")
+log.debug("Loaded parameters configuration as: {}".format(parameters))
+
 catalog = conf_loader.get("catalog*", "catalog*/**")
+log.debug("Loaded catalog configuration as: {}".format(catalog))
+
 logging = conf_loader.get("logging*", "logging*/**")
+log.debug("Loaded logging configuration as: {}".format(logging))
+
 credentials = conf_loader.get("credentials*", "credentials*/**")
+log.debug("Loaded credentials configuration as: {}".format(credentials))
+
 
 print("credentials: ", credentials)
 
-TEST1_TABLE_NAME = parameters.test_environment.TEST1_TABLE_NAME
+TEST1_TABLE_NAME = "test_table"
 
 FIREBIRD_TEST_DATABASE_HOST = parameters.firebird.DATABASE_HOST
 FIREBIRD_TEST_DATABASE_USER = credentials.firebird.DATABASE_USER
@@ -124,5 +133,34 @@ POSTGRES_TEST_DATABASE_PASSWORD = credentials.postgres.DATABASE_PASSWORD
 POSTGRES_TEST_DATABASE_PATH = parameters.postgres.DATABASE_PATH
 
 # -------------------------------------------------------------------------
-# Functions
+# database - agnostig pointer creation
 # -------------------------------------------------------------------------
+
+
+def create_pointer(database_driver: str) -> Cursor:
+    """
+    Creates a pointer to the database.
+    :param database_driver: database driver
+    :return: pointer to the database
+    """
+    if database_driver == "firebird":
+        connection = firebird.connect(
+            host=FIREBIRD_TEST_DATABASE_HOST,
+            user=FIREBIRD_TEST_DATABASE_USER,
+            password=FIREBIRD_TEST_DATABASE_PASSWORD,
+        )
+    elif database_driver == "mysql":
+        connection = sq3.connect(
+            host=MYSQL_TEST_DATABASE_HOST,
+            user=MYSQL_TEST_DATABASE_USER,
+            password=MYSQL_TEST_DATABASE_PASSWORD,
+        )
+    elif database_driver == "postgres":
+        connection = pg.connect(
+            host=POSTGRES_TEST_DATABASE_HOST,
+            user=POSTGRES_TEST_DATABASE_USER,
+            password=POSTGRES_TEST_DATABASE_PASSWORD,
+        )
+    else:
+        raise Exception("Database driver not recognized")
+    return connection
