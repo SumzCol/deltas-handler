@@ -3,7 +3,6 @@ from setuptools import find_packages, setup
 
 entry_point = "Aldebaran_Learning = Aldebaran_Learnings.__main__:main"
 
-
 # get the dependencies and installs
 with open("requirements.txt", "r", encoding="utf-8") as f:
     # Make sure we strip all comments and options (e.g "--extra-index-url")

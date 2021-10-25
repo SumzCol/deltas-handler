@@ -26,7 +26,6 @@
 #
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Project hooks."""
 from typing import Any, Dict, Iterable, Optional
 
